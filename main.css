@@ -12,7 +12,7 @@ h1 {
 	padding: 15px 0;
 }
 
-#frags-container {
+#frags-input textarea {
 	width: 100%;
 	resize: none;
 	border-radius: 10px;
@@ -20,22 +20,23 @@ h1 {
 	height: 500px;
 }
 
-#frags-table table {
+#frags-output table {
 	border-radius: 10px;
 	background: #FFF;
 	margin-bottom: 10px;
 }
 
-#frags-table p {
+#frags-output p,
+#frags-input p {
 	color: white;
 	font-size: 16px;
 }
 
-#frags-table td:first-child {
+#frags-output td:first-child {
 	font-weight: bold;
 }
 
-#frags-table tr > :not(:first-child) {
+#frags-output tr > :not(:first-child) {
 	text-align: center;
 }
 

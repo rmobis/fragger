@@ -21,8 +21,11 @@
 				<h1>Fragger</h1>
 			</div>
 			<div class="content">
-				<textarea name="frags" id="frags-container"></textarea>
-				<div id="frags-table">
+				<div id="frags-input">
+					<p>Input the frag messages as taken from Tibia's website to get some useful information.</p>
+					<textarea name="frags"></textarea>
+				</div>
+				<div id="frags-output">
 					<p>
 						<b>Skull:</b>
 						<span id="skull"></span>
@@ -90,19 +93,19 @@
 		<script src="Fragger.js"></script>
 
 		<script>
-			var fragsTable      = $('#frags-table'),
-			    fragsContainer  = $('#frags-container'),
-			    actionButton    = $('#action-button'),
-				fragRows        = fragsTable.find('tbody tr'),
-				skull           = $('#skull'),
-				redUnjusts      = $('#unjusts-red'),
-				blackUnjusts    = $('#unjusts-black');
+			var fragsOutput  = $('#frags-output'),
+			    fragsInput   = $('#frags-input'),
+			    actionButton = $('#action-button'),
+				fragRows     = fragsOutput.find('tbody tr'),
+				skull        = $('#skull'),
+				redUnjusts   = $('#unjusts-red'),
+				blackUnjusts = $('#unjusts-black');
 
-			fragsTable.hide();
+			fragsOutput.hide();
 
 			actionButton.on('click', function() {
-				if (fragsContainer.is(':visible')) {
-					var fragger = new Fragger(fragsContainer.val().split('\n'));
+				if (fragsInput.is(':visible')) {
+					var fragger = new Fragger(fragsInput.val().split('\n'));
 
 					skull.text(fragger.getSkull());
 					redUnjusts.text(fragger.fragsLeftBeforeSkull('red'));
@@ -131,12 +134,12 @@
 
 					actionButton.text('Try Again!');
 				} else {
-					fragsContainer.val('');
+					fragsInput.val('');
 					actionButton.text('Process!');
 				}
 
-				fragsTable.slideToggle();
-				fragsContainer.slideToggle();
+				fragsOutput.slideToggle();
+				fragsInput.slideToggle();
 			});
 		</script>
 	</body>
