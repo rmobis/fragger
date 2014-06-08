@@ -101,7 +101,6 @@ Fragger.prototype.fragsLeftBeforeSkull = function(skullType) {
 };
 
 /* Gets the current skull the character should have */
- */
 Fragger.prototype.getSkull = function() {
 	var unjustifiedFrags = this.get(FRAG.UNJUSTIFIED);
 	var now = Date.now();
