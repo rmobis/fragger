@@ -4,7 +4,7 @@
 function Frag(fragMessage) {
 	var fragData;
 
-	fragData = fragMessage.match(/^(.+?) Killed (.+) at Level (\d+) (.+)$/);
+	fragData = fragMessage.match(/^(.+?)\sKilled\s(.+)\sat\sLevel\s(\d+)\s(.+)$/);
 
 	this.date   = new Date(this.convertDateToISO(fragData[1]));
 	this.victim = fragData[2];
