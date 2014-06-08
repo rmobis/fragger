@@ -1,0 +1,55 @@
+body {
+	background: url(http://subtlepatterns.com/patterns/dark_wood.png);
+}
+
+h1 {
+	color: white;
+	font-size: 60px;
+}
+
+.content {
+	overflow: hidden;
+	padding: 15px 0;
+}
+
+#frags-container {
+	width: 100%;
+	resize: none;
+	border-radius: 10px;
+	font-family: Lucida Console;
+	height: 500px;
+}
+
+#frags-table table {
+	border-radius: 10px;
+	background: #FFF;
+	margin-bottom: 10px;
+}
+
+#frags-table p {
+	color: white;
+	font-size: 16px;
+}
+
+#frags-table td:first-child {
+	font-weight: bold;
+}
+
+#frags-table tr > :not(:first-child) {
+	text-align: center;
+}
+
+/* Customize container */
+@media (min-width: 768px) {
+	.content {
+		padding: 15px;
+		border-radius: 15px;
+		background: url(http://subtlepatterns.com/patterns/diagmonds.png);
+		border: 2px solid #000;
+
+	}
+
+	.container {
+		max-width: 730px;
+	}
+}

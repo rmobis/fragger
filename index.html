@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Fragger</title>
+
+		<link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="main.css" rel="stylesheet" />
+
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="header">
+				<h1>Fragger</h1>
+			</div>
+			<div class="content">
+				<textarea name="frags" id="frags-container"></textarea>
+				<div id="frags-table">
+					<p>
+						<b>Skull:</b>
+						<span id="skull"></span>
+					</p>
+					<p>
+						<b>Unjusts Before Red:</b>
+						<span id="unjusts-red"></span>
+					</p>
+					<p>
+						<b>Unjusts Before Black:</b>
+						<span id="unjusts-black"></span>
+					</p>
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Count</th>
+									<th>Min. Lvl</th>
+									<th>Avg. Lvl</th>
+									<th>Max. Lvl</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="text-success" data-frag-type="ok">
+									<td>Ok</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr class="text-info" data-frag-type="war related">
+									<td>War Related</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr class="text-warning" data-frag-type="assisted">
+									<td>Assisted</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr class="text-danger" data-frag-type="unjustified">
+									<td>Unjustified</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<button type="button" id="action-button" class="btn btn-lg pull-right">Process!</button>
+			</div>
+		</div>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+		<script src="Frag.js"></script>
+		<script src="Fragger.js"></script>
+
+		<script>
+			var fragsTable      = $('#frags-table'),
+			    fragsContainer  = $('#frags-container'),
+			    actionButton    = $('#action-button'),
+				fragRows        = fragsTable.find('tbody tr'),
+				skull           = $('#skull'),
+				redUnjusts      = $('#unjusts-red'),
+				blackUnjusts    = $('#unjusts-black');
+
+			fragsTable.hide();
+
+			actionButton.on('click', function() {
+				if (fragsContainer.is(':visible')) {
+					var fragger = new Fragger(fragsContainer.val().split('\n'));
+
+					skull.text(fragger.getSkull());
+					redUnjusts.text(fragger.fragsLeftBeforeSkull('red'));
+					blackUnjusts.text(fragger.fragsLeftBeforeSkull('black'));
+
+					// We could have gone for something like Handlebars here,
+					// but it would probably be an overkill to include it for a
+					// single template.
+					fragRows.each(function(i, el) {
+						var $el       = $(el),
+							elColumns = $el.find('td'),
+						    fragStats = fragger.stats($el.data('frag-type'));
+
+						elColumns.eq(1).text(fragStats.count);
+
+						if (fragStats.count !== 0) {
+							elColumns.eq(2).text(fragStats.minLvl);
+							elColumns.eq(3).text(fragStats.avgLvl);
+							elColumns.eq(4).text(fragStats.maxLvl);
+						} else {
+							elColumns.eq(2).text('-');
+							elColumns.eq(3).text('-');
+							elColumns.eq(4).text('-');
+						}
+					});
+
+					actionButton.text('Try Again!');
+				} else {
+					fragsContainer.val('');
+					actionButton.text('Process!');
+				}
+
+				fragsTable.slideToggle();
+				fragsContainer.slideToggle();
+			});
+		</script>
+	</body>
+</html>
